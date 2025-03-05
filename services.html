@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Chacoif</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .services-section {
+            padding: 5rem 0;
+        }
+        
+        .services-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .services-header h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .services-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-category {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .service-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .service-header h3 {
+            margin: 0;
+        }
+        
+        .service-list {
+            padding: 2rem;
+        }
+        
+        .service-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .service-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .service-item h4 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-item .price {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .service-item p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .service-note {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+        }
+        
+        .service-note p {
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">
+                    <h1>Chacoif</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="services.html" class="active">Services</a></li>
+                    <li><a href="gallery.html">Galerie</a></li>
+                    <li><a href="booking.html" class="cta-button">Réserver</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="services-section">
+        <div class="container">
+            <div class="services-header">
+                <h2>Nos Services</h2>
+                <p>Chez Chacoif, nous proposons une gamme complète de services capillaires pour hommes et femmes. Nos coiffeurs qualifiés sont à votre écoute pour vous conseiller et réaliser la coiffure qui vous convient parfaitement.</p>
+            </div>
+
+            <div class="services-container">
+                <div class="service-category">
+                    <div class="service-header">
+                        <h3>Coupes & Styling</h3>
+                    </div>
+                    <div class="service-list">
+                        <div class="service-item">
+                            <h4>Coupe Femme <span class="price">45€</span></h4>
+                            <p>Coupe, shampooing et brushing inclus</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Coupe Homme <span class="price">30€</span></h4>
+                            <p>Coupe, shampooing et coiffage inclus</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Coupe Enfant <span class="price">20€</span></h4>
+                            <p>Pour enfants jusqu'à 12 ans</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Brushing <span class="price">35€</span></h4>
+                            <p>Shampooing et brushing adapté à votre style</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Coiffure Spéciale <span class="price">à partir de 60€</span></h4>
+                            <p>Pour événements, mariages, soirées</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-category">
+                    <div class="service-header">
+                        <h3>Coloration</h3>
+                    </div>
+                    <div class="service-list">
+                        <div class="service-item">
+                            <h4>Coloration Racines <span class="price">45€</span></h4>
+                            <p>Retouche de la couleur sur les racines</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Coloration Complète <span class="price">70€</span></h4>
+                            <p>Coloration sur l'ensemble de la chevelure</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Balayage <span class="price">à partir de 90€</span></h4>
+                            <p>Effet naturel de cheveux éclaircis par le soleil</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Mèches <span class="price">à partir de 80€</span></h4>
+                            <p>Pour ajouter dimension et profondeur</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Ombré/Tie & Dye <span class="price">à partir de 110€</span></h4>
+                            <p>Dégradé de couleur des racines aux pointes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-category">
+                    <div class="service-header">
+                        <h3>Soins & Traitements</h3>
+                    </div>
+                    <div class="service-list">
+                        <div class="service-item">
+                            <h4>Soin Profond Hydratant <span class="price">35€</span></h4>
+                            <p>Pour cheveux secs et déshydratés</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Traitement Anti-Chute <span class="price">45€</span></h4>
+                            <p>Stimule le cuir chevelu et renforce les cheveux</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Soin Réparateur <span class="price">40€</span></h4>
+                            <p>Pour cheveux abîmés et fragilisés</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Massage du Cuir Chevelu <span class="price">25€</span></h4>
+                            <p>15 minutes de relaxation et stimulation</p>
+                        </div>
+                        <div class="service-item">
+                            <h4>Soin Kératine <span class="price">120€</span></h4>
+                            <p>Lissage, brillance et réparation en profondeur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-note">
+                <p>Les prix peuvent varier selon la longueur et l'épaisseur des cheveux.</p>
+                <p>Pour plus d'informations ou pour des services spécifiques, n'hésitez pas à nous contacter.</p>
+                <a href="booking.html" class="btn">Réserver un rendez-vous</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3>Chacoif</h3>
+                    <p>12 Rue de la Coiffure<br>75001 Paris<br>France</p>
+                    <p>Téléphone: 01 23 45 67 89<br>Email: contact@chacoif.fr</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Galerie</a></li>
+                        <li><a href="booking.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Chacoif. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

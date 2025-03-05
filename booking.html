@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation - Chacoif</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .booking-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .booking-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .booking-header h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .booking-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+        
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .booking-form {
+            background-color: var(--light-color);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(156, 102, 68, 0.2);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .booking-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .info-card {
+            background-color: var(--light-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .info-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.8rem;
+        }
+        
+        .hours-list {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-list {
+            list-style: none;
+        }
+        
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-list i {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .booking-calendar {
+            margin-top: 2rem;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .calendar-month {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .calendar-nav button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+        
+        .calendar-day-header {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .calendar-day {
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-day:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .calendar-day.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .calendar-day.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .time-slots {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        .time-slots.show {
+            display: block;
+        }
+        
+        .time-slots h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.8rem;
+        }
+        
+        .time-slot {
+            padding: 0.5rem;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .time-slot:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .time-slot.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .time-slot.booked {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            cursor: not-allowed;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .booking-confirmation {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .booking-confirmation i {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1.5rem;
+        }
+        
+        .booking-confirmation h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 992px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <div class="logo">
+                    <h1>Chacoif</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.html">Galerie</a></li>
+                    <li><a href="booking.html" class="active cta-button">Réserver</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-header">
+                <h2>Réservez Votre Rendez-vous</h2>
+                <p>Prenez rendez-vous en ligne pour votre prochaine séance de coiffure chez Chacoif. Choisissez un créneau horaire disponible et laissez-nous vous chouchouter.</p>
+            </div>
+
+            <div id="booking-form-container">
+                <div class="booking-container">
+                    <div class="booking-form">
+                        <form id="appointment-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">Prénom</label>
+                                    <input type="text" id="first-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Nom</label>
+                                    <input type="text" id="last-name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input type="tel" id="phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service souhaité</label>
+                                <select id="service" class="form-control" required>
+                                    <option value="">Sélectionnez un service</option>
+                                    <option value="coupe-femme">Coupe Femme</option>
+                                    <option value="coupe-homme">Coupe Homme</option>
+                                    <option value="coloration">Coloration</option>
+                                    <option value="balayage">Balayage</option>
+                                    <option value="brushing">Brushing</option>
+                                    <option value="coiffure-speciale">Coiffure Spéciale</option>
+                                    <option value="soin">Soin Capillaire</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="stylist">Coiffeur (optionnel)</label>
+                                <select id="stylist" class="form-control">
+                                    <option value="">Pas de préférence</option>
+                                    <option value="sophie">Sophie</option>
+                                    <option value="thomas">Thomas</option>
+                                    <option value="julie">Julie</option>
+                                    <option value="nicolas">Nicolas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes / Demandes spéciales</label>
+                                <textarea id="notes" class="form-control" rows="3"></textarea>
+                            </div>
+
+                            <div class="booking-calendar">
+                                <div class="calendar-header">
+                                    <div class="calendar-month">Juillet 2023</div>
+                                    <div class="calendar-nav">
+                                        <button type="button" class="calendar-prev"><i class="fas fa-chevron-left"></i></button>
+                                        <button type="button" class="calendar-next"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                                <div class="calendar-grid">
+                                    <div class="calendar-day-header">Lun</div>
+                                    <div class="calendar-day-header">Mar</div>
+                                    <div class="calendar-day-header">Mer</div>
+                                    <div class="calendar-day-header">Jeu</div>
+                                    <div class="calendar-day-header">Ven</div>
+                                    <div class="calendar-day-header">Sam</div>
+                                    <div class="calendar-day-header">Dim</div>
+                                    
+                                    <!-- Calendar days will be generated by JS -->
+                                </div>
+
+                                <div class="time-slots">
+                                    <h4>Créneaux disponibles pour <span class="selected-date"></span></h4>
+                                    <div class="time-grid">
+                                        <!-- Time slots will be generated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="selected-date" name="selected-date">
+                            <input type="hidden" id="selected-time" name="selected-time">
+                            
+                            <button type="submit" class="submit-btn">Confirmer la réservation</button>
+                        </form>
+                    </div>
+
+                    <div class="booking-info">
+                        <div class="info-card">
+                            <h3>Nos Horaires</h3>
+                            <ul class="hours-list">
+                                <li><span>Lundi:</span> 9h - 19h</li>
+                                <li><span>Mardi:</span> 9h - 19h</li>
+                                <li><span>Mercredi:</span> 9h - 19h</li>
+                                <li><span>Jeudi:</span> 9h - 20h</li>
+                                <li><span>Vendredi:</span> 9h - 20h</li>
+                                <li><span>Samedi:</span> 9h - 18h</li>
+                                <li><span>Dimanche:</span> Fermé</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h3>Informations Utiles</h3>
+                            <p>Pour votre rendez-vous :</p>
+                            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                                <li>Merci d'arriver 5-10 minutes avant l'heure de votre rendez-vous</li>
+                                <li>En cas d'empêchement, veuillez nous prévenir au moins 24h à l'avance</li>
+                                <li>Pour toute question, n'hésitez pas à nous contacter</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h3>Contact</h3>
+                            <ul class="contact-list">
+                                <li>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>12 Rue de la Coiffure, 75001 Paris</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone"></i>
+                                    <span>01 23 45 67 89</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope"></i>
+                                    <span>contact@chacoif.fr</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="booking-confirmation" class="booking-confirmation">
+                <i class="fas fa-check-circle"></i>
+                <h3>Votre réservation a été confirmée !</h3>
+                <p>Merci pour votre réservation. Un email de confirmation a été envoyé à l'adresse que vous avez fournie.</p>
+                <div class="booking-details">
+                    <p><strong>Date:</strong> <span id="confirm-date"></span></p>
+                    <p><strong>Heure:</strong> <span id="confirm-time"></span></p>
+                    <p><strong>Service:</strong> <span id="confirm-service"></span></p>
+                </div>
+                <p class="mt-4">Nous avons hâte de vous accueillir chez Chacoif !</p>
+                <a href="index.html" class="btn" style="margin-top: 2rem;">Retour à l'accueil</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3>Chacoif</h3>
+                    <p>12 Rue de la Coiffure<br>75001 Paris<br>France</p>
+                    <p>Téléphone: 01 23 45 67 89<br>Email: contact@chacoif.fr</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Galerie</a></li>
+                        <li><a href="booking.html">Réservation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Chacoif. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Calendar functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const timeGrid = document.querySelector('.time-grid');
+            const timeSlots = document.querySelector('.time-slots');
+            const selectedDateSpan = document.querySelector('.selected-date');
+            const calendarMonth = document.querySelector('.calendar-month');
+            const prevBtn = document.querySelector('.calendar-prev');
+            const nextBtn = document.querySelector('.calendar-next');
+            const selectedDateInput = document.getElementById('selected-date');
+            const selectedTimeInput = document.getElementById('selected-time');
+            const appointmentForm = document.getElementById('appointment-form');
+            const bookingFormContainer = document.getElementById('booking-form-container');
+            const bookingConfirmation = document.getElementById('booking-confirmation');
+            
+            // Current date
+            let currentDate = new Date();
+            let selectedDate = null;
+            let selectedTimeSlot = null;
+            
+            // Initialize calendar
+            function initCalendar() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                
+                // Update calendar month display
+                const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+                calendarMonth.textContent = `${monthNames[month]} ${year}`;
+                
+                // Clear existing days
+                const dayElements = document.querySelectorAll('.calendar-day');
+                dayElements.forEach(day => day.remove());
+                
+                // Get first day of month and total days
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Adjust for Monday as first day (0 = Monday, 6 = Sunday)
+                let startingDay = firstDay === 0 ? 6 : firstDay - 1;
+                
+                // Create empty cells for days before start of month
+                for (let i = 0; i < startingDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.classList.add('calendar-day');
+                    calendarGrid.appendChild(emptyDay);
+                }
+                
+                // Create calendar days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('calendar-day');
+                    dayElement.textContent = day;
+                    
+                    // Check if date is in the past
+                    const date = new Date(year, month, day);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    if (date < today) {
+                        dayElement.classList.add('disabled');
+                    } else {
+                        // Check if it's Sunday (0)
+                        if (date.getDay() === 0) {
+                            dayElement.classList.add('disabled');
+                        } else {
+                            dayElement.addEventListener('click', () => selectDate(date, dayElement));
+                        }
+                    }
+                    
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+            
+            // Select a date
+            function selectDate(date, element) {
+                // Remove active class from previously selected date
+                const activeDate = document.querySelector('.calendar-day.active');
+                if (activeDate) {
+                    activeDate.classList.remove('active');
+                }
+                
+                // Add active class to selected date
+                element.classList.add('active');
+                
+                // Update selected date
+                selectedDate = date;
+                const formattedDate = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                selectedDateSpan.textContent = formattedDate;
+                selectedDateInput.value = date.toISOString().split('T')[0];
+                
+                // Generate time slots for selected date
+                generateTimeSlots(date);
+                
+                // Show time slots
+                timeSlots.classList.add('show');
+            }
+            
+            // Generate time slots
+            function generateTimeSlots(date) {
+                // Clear existing time slots
+                timeGrid.innerHTML = '';
+                
+                // Set opening and closing times based on day of week
+                let openingTime, closingTime;
+                const day = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+                
+                if (day === 5 || day === 6) { // Friday or Saturday
+                    openingTime = 9;
+                    closingTime = day === 5 ? 20 : 18; // Friday 20h, Saturday 18h
+                } else {
+                    openingTime = 9;
+                    closingTime = 19;
+                }
+                
+                // Generate time slots in 30 minute intervals
+                for (let hour = openingTime; hour < closingTime; hour++) {
+                    for (let minute = 0; minute < 60; minute += 30) {
+                        if (hour === closingTime - 1 && minute === 30) continue; // Skip last slot if it exceeds closing time
+                        
+                        const timeSlot = document.createElement('div');
+                        timeSlot.classList.add('time-slot');
+                        
+                        const displayHour = hour.toString().padStart(2, '0');
+                        const displayMinute = minute.toString().padStart(2, '0');
+                        timeSlot.textContent = `${displayHour}:${displayMinute}`;
+                        
+                        // Randomly mark some slots as booked (for demo purposes)
+                        if (Math.random() < 0.3) {
+                            timeSlot.classList.add('booked');
+                        } else {
+                            timeSlot.addEventListener('click', () => selectTimeSlot(timeSlot, `${displayHour}:${displayMinute}`));
+                        }
+                        
+                        timeGrid.appendChild(timeSlot);
+                    }
+                }
+            }
+            
+            // Select time slot
+            function selectTimeSlot(element, time) {
+                // Remove active class from previously selected time slot
+                const activeTime = document.querySelector('.time-slot.active');
+                if (activeTime) {
+                    activeTime.classList.remove('active');
+                }
+                
+                // Add active class to selected time slot
+                element.classList.add('active');
+                
+                // Update selected time
+                selectedTimeSlot = time;
+                selectedTimeInput.value = time;
+            }
+            
+            // Navigate to previous month
+            prevBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                initCalendar();
+                timeSlots.classList.remove('show');
+            });
+            
+            // Navigate to next month
+            nextBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                initCalendar();
+                timeSlots.classList.remove('show');
+            });
+            
+            // Handle form submission
+            appointmentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate date and time selection
+                if (!selectedDate || !selectedTimeSlot) {
+                    alert('Veuillez sélectionner une date et un horaire pour votre rendez-vous.');
+                    return;
+                }
+                
+                // Get form values
+                const firstName = document.getElementById('first-name').value;
+                const lastName = document.getElementById('last-name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const service = document.getElementById('service');
+                const serviceText = service.options[service.selectedIndex].text;
+                
+                // For a real application, you would send this data to a server
+                // For the demo, we'll just display a confirmation
+                
+                // Display confirmation details
+                document.getElementById('confirm-date').textContent = selectedDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                document.getElementById('confirm-time').textContent = selectedTimeSlot;
+                document.getElementById('confirm-service').textContent = serviceText;
+                
+                // Hide form and show confirmation
+                bookingFormContainer.style.display = 'none';
+                bookingConfirmation.style.display = 'block';
+            });
+            
+            // Initialize calendar on page load
+            initCalendar();
+        });
+    </script>
+</body>
+</html> 
